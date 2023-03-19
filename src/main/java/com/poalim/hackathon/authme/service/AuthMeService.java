@@ -1,7 +1,7 @@
 package com.poalim.hackathon.authme.service;
 
 import com.poalim.hackathon.authme.dao.NewJwtEntryRequest;
-import lombok.AllArgsConstructor;
+import io.jsonwebtoken.lang.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,15 @@ public class AuthMeService {
     private final JwtService jwtProduce;
     private final FileCrudService fileCrudService;
 
-    public String insert(NewJwtEntryRequest transactionRequest) {
+    public String insertJwt(NewJwtEntryRequest transactionRequest) {
 
         String jwt = jwtProduce.newJwt();
         log.info("JWT={}", jwt);
-        fileCrudService.insertIntoDB(transactionRequest.getUser(), jwt);
-        return jwt;
+        fileCrudService.insertIntoDB(transactionRequest, jwt);
+        log.info("row from db = {}", fileCrudService.findByUser(transactionRequest.getUser()));
+        String jwtDec = jwtProduce.decryptJwt(jwt);
+//        String word = jwt
+        return jwtDec;
     }
 
 

@@ -1,21 +1,20 @@
 package com.poalim.hackathon.authme.dao;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 
 @Data
+@Table(name = "NewJwtEntryRequest")
 @Entity
 @AllArgsConstructor
 public class NewJwtEntryRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
     String user;
     String firstName;
     String secondName;
