@@ -6,7 +6,6 @@ import lombok.Data;
 
 
 @Data
-@Entity
 @AllArgsConstructor
 public class AuthenticateUserRequest {
     Integer otp;

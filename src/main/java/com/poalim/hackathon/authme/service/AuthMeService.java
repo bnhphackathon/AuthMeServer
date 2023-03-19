@@ -1,5 +1,6 @@
 package com.poalim.hackathon.authme.service;
 
+import com.poalim.hackathon.authme.dao.AuthenticateUserRequest;
 import com.poalim.hackathon.authme.dao.NewJwtEntryRequest;
 import io.jsonwebtoken.lang.Objects;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,9 @@ public class AuthMeService {
 
     public JwtService getJwtProduce() {
         return jwtProduce;
+    }
+
+    public String getOtp(AuthenticateUserRequest authenticateUserRequest) {
+        return null;
     }
 }

@@ -28,7 +28,7 @@ public class AuthMeAppController {
     @PostMapping("/authenticate-user")
     public ResponseEntity<String> authenticateUser(@RequestBody AuthenticateUserRequest authenticateUserRequest) {
 
-        return new ResponseEntity<>( authMeService.insertJwt(newJwtEntryRequest), HttpStatus.OK);
+        return new ResponseEntity<>( authMeService.getOtp(authenticateUserRequest), HttpStatus.OK);
 
     }
 
