@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+
+app-params:
+  secretKeyBase64: i24CQ2Dtl1ViRMYa2ZG7VlJiLdMW7m3wq3uWi7VfY1E=
+  publicKeyBase64: i24CQ2Dtl1ViRMYa2ZG7VlJiLdMW7m3wq3uWi7VfY1E=
+
+
