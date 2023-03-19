@@ -15,6 +15,7 @@ public class NewJwtEntryRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+    String jwt;
     String user;
     String firstName;
     String secondName;

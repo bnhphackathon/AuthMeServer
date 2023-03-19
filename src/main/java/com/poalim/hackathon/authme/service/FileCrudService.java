@@ -26,10 +26,10 @@ public class FileCrudService {
 //        }
 //    }
 
-    public  String insertIntoDB(NewJwtEntryRequest newJwtEntry, String jwt) {
+    public  String insertIntoDB(NewJwtEntryRequest newJwtEntry) {
 
         newJwtEntryRequestRepository.save(newJwtEntry);
-        return jwt;
+        return newJwtEntry.getJwt();
 
     }
 

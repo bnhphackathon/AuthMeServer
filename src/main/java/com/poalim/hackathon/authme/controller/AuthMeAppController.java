@@ -1,6 +1,7 @@
 package com.poalim.hackathon.authme.controller;
 
 import com.poalim.hackathon.authme.dao.AuthenticateUserRequest;
+import com.poalim.hackathon.authme.dao.AuthenticateUserResponse;
 import com.poalim.hackathon.authme.dao.NewJwtEntryRequest;
 import com.poalim.hackathon.authme.service.AuthMeService;
 import lombok.AllArgsConstructor;
@@ -26,9 +27,9 @@ public class AuthMeAppController {
     }
 
     @PostMapping("/authenticate-user")
-    public ResponseEntity<String> authenticateUser(@RequestBody AuthenticateUserRequest authenticateUserRequest) {
+    public ResponseEntity<AuthenticateUserResponse> authenticateUser(@RequestBody AuthenticateUserRequest authenticateUserRequest) {
 
-        return new ResponseEntity<>( authMeService.getOtp(authenticateUserRequest), HttpStatus.OK);
+        return new ResponseEntity<AuthenticateUserResponse>( authMeService.getOtp(authenticateUserRequest), HttpStatus.OK);
 
     }
 
