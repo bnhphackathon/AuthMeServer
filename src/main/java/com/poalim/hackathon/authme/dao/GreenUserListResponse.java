@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 
 @Data
 @AllArgsConstructor
 @Builder
-public class AuthenticateUserResponse {
-    Boolean otpAuthenticate;
-    String user;
+public class GreenUserListResponse {
+    List<GreenUser> greenUserList;
 }

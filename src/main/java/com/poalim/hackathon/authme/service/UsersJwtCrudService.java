@@ -1,43 +1,29 @@
 package com.poalim.hackathon.authme.service;
 import com.poalim.hackathon.authme.dao.NewJwtEntryRequest;
-import com.poalim.hackathon.authme.repository.NewJwtEntryRequestRepository;
+import com.poalim.hackathon.authme.repository.UsersJwtRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class FileCrudService {
+public class UsersJwtCrudService {
 
-    private final NewJwtEntryRequestRepository newJwtEntryRequestRepository;
-//    public static void main(String[] args) {
-//        int userId = 12345; // example user ID
-//
-//        insertIntoDB(userId, jwt);
-//
-//        String userIdToFind = "12345"; // example user ID to find
-//        String token = readFromDB(userIdToFind);
-//        if (token != null) {
-//            System.out.println("Token for user ID " + userIdToFind + ": " + token);
-//        }
-//    }
+    private final UsersJwtRepository newJwtEntryRequestRepository;
 
     public  String insertIntoDB(NewJwtEntryRequest newJwtEntry) {
 
         newJwtEntryRequestRepository.save(newJwtEntry);
         return newJwtEntry.getJwt();
-
     }
 
     public  NewJwtEntryRequest findByUser(String user) {
 
         Optional<NewJwtEntryRequest> jwtEntryOpt = newJwtEntryRequestRepository.findByUser(user);
         if (!jwtEntryOpt.isPresent()){
-            throw new RuntimeException();
+            return null;
         }
         return jwtEntryOpt.get();
 

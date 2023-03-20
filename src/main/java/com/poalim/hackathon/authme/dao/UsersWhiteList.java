@@ -8,21 +8,15 @@ import lombok.NoArgsConstructor;
 
 
 @Data
-@Table(name = "NewJwtEntryRequest")
+@Table(name = "UsersWhiteList")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NewJwtEntryRequest {
+public class UsersWhiteList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String jwt;
     String user;
-    String firstName;
-    String secondName;
-    String squad;
-    String tribe;
-    Boolean isGreen;
 }

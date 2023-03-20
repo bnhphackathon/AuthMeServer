@@ -11,6 +11,7 @@ public class AuthMeApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(AuthMeApplication.class, args);
+		log.info("-----------------> AuthMe Server is on <-------------------");
 
 	}
 }

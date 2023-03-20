@@ -3,6 +3,7 @@ package com.poalim.hackathon.authme.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -37,7 +38,7 @@ public class JwtService {
         }
 
         String jwt = Jwts.builder()
-                .claim("pin", String.format("%06d", (int) (Math.random() * 1000000))) // 6 digit pin code
+                .claim("otp", String.format("%06d", (int) (Math.random() * 1000000))) // 6 digit otp code
                 .signWith(secretKey)
                 .compact();
         return jwt;
@@ -53,15 +54,16 @@ public class JwtService {
                 .build()
                 .parseClaimsJws(jwt)
                 .getBody();
-        String pin = claims.get("pin", String.class);
-        return pin;
+        String otp = claims.get("otp", String.class);
+        return otp;
     }
 
-
-    public String newJwt() {
+    @PostConstruct
+    public void init() {
         setPublicKey(secretKeyBase64);
         setSecretKey(publicKeyBase64);
-
+    }
+    public String getNewJwt() {
         String jwtGen = generateJwt();
         String jwtDec = decryptJwt(jwtGen);
         return jwtGen;

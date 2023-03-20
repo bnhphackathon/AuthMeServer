@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:mem:mydb;DB_CLOSE_DELAY=-1;MODE=MySQL;NON_KEYWORDS=USER
+    url: jdbc:h2:file:/data/mydb;DB_CLOSE_DELAY=-1;MODE=MySQL;NON_KEYWORDS=USER
     driverClassName: org.h2.Driver
     username: sa
     password: password
