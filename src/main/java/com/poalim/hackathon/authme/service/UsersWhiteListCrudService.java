@@ -1,17 +1,11 @@
 
 package com.poalim.hackathon.authme.service;
 
-import com.poalim.hackathon.authme.dao.NewJwtEntryRequest;
 import com.poalim.hackathon.authme.dao.UsersWhiteList;
-import com.poalim.hackathon.authme.repository.UsersJwtRepository;
 import com.poalim.hackathon.authme.repository.UsersWhiteListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Optional;
 
 @Service

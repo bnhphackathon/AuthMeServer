@@ -24,9 +24,9 @@ public class AuthMeAppController {
         NewJwtEntryResponse response = authMeService.insertJwt(newJwtEntryRequest);
         if (Objects.isNull(response.getData())){
             log.error("ERROR in insertJwt: ", response.getError().getMessage());
-            return new ResponseEntity<NewJwtEntryResponse>(response, HttpStatus.INTERNAL_SERVER_ERROR );
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR );
         }
-        return new ResponseEntity<NewJwtEntryResponse>(response, HttpStatus.OK );
+        return new ResponseEntity<>(response, HttpStatus.OK );
     }
 
     @GetMapping("/authenticate-user")

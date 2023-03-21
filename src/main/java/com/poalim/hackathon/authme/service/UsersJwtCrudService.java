@@ -1,27 +1,47 @@
 package com.poalim.hackathon.authme.service;
+import com.poalim.hackathon.authme.dao.GreenUser;
 import com.poalim.hackathon.authme.dao.NewJwtEntryRequest;
+import com.poalim.hackathon.authme.dao.OtpJwtforUsers;
 import com.poalim.hackathon.authme.repository.UsersJwtRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UsersJwtCrudService {
 
-    private final UsersJwtRepository newJwtEntryRequestRepository;
+    private final UsersJwtRepository usersJwtRepository;
 
-    public  String insertIntoDB(NewJwtEntryRequest newJwtEntry) {
+    public  String insertIntoDB(NewJwtEntryRequest newJwtEntry, String jwt) {
 
-        newJwtEntryRequestRepository.save(newJwtEntry);
-        return newJwtEntry.getJwt();
+        OtpJwtforUsers otpJwtforUsers = findByUser(newJwtEntry.getUser());
+        if (Objects.isNull(otpJwtforUsers)){
+            usersJwtRepository.save(OtpJwtforUsers.builder()
+                    .firstName(newJwtEntry.getFirstName())
+                    .jwt(jwt)
+                    .isGreen(false)
+                    .user(newJwtEntry.getUser())
+                    .lastName(newJwtEntry.getLastName())
+                    .squad(newJwtEntry.getSquad())
+                    .tribe(newJwtEntry.getTribe())
+                    .build());
+        } else {
+            otpJwtforUsers.setJwt(jwt);
+            usersJwtRepository.save(otpJwtforUsers);
+        }
+
+
+        return jwt;
     }
 
-    public  NewJwtEntryRequest findByUser(String user) {
+    public OtpJwtforUsers findByUser(String user) {
 
-        Optional<NewJwtEntryRequest> jwtEntryOpt = newJwtEntryRequestRepository.findByUser(user);
+        Optional<OtpJwtforUsers> jwtEntryOpt = usersJwtRepository.findByUser(user);
         if (!jwtEntryOpt.isPresent()){
             return null;
         }
@@ -30,78 +50,14 @@ public class UsersJwtCrudService {
     }
 
 
-//    public  void insertIntoDB(String userId, String jwt){
-//        String fileName = "c:\\temp\\AuthMe.csv";
-//        String fileNameNew = "c:\\temp\\AuthNewMe.csv";
-//
-//        try {
-//                File file = new File(fileName);
-//            File fileNew = new File(fileNameNew);
-//            FileWriter writer = new FileWriter(fileNew, true);
-//
-//
-//            if (file.exists()) {
-//                BufferedReader reader = new BufferedReader(new FileReader(file));
-//                String line;
-//                StringBuilder stringBuilder = new StringBuilder();
-//                boolean userIdFound = false;
-//
-//                while ((line = reader.readLine()) != null) {
-//                    String[] tokens = line.split(",");
-//                    if (tokens.length > 0 && tokens[0].equals(userId)) {
-//                        userIdFound = true;
-//                    } else {
-//                        stringBuilder.append(line + "\r\n");
-//                    }
-//                }
-//
-//                if (userIdFound) {
-//                    writer.write(stringBuilder.toString());
-//                } else {
-//                    writer.append(userId + "," + jwt + "\r\n");
-//                }
-//
-//
-//            } else {
-//                fileNew.createNewFile();
-//                writer.append("UserId,Token\r\n" + userId + "," + jwt + "\r\n");
-//            }
-//
-//            writer.flush();
-//            writer.close();
-//            Path filePath = Path.of(fileName);
-//            Path newFilePath = Path.of(fileNameNew);
-//            Files.delete(filePath);
-//            Files.move(filePath, newFilePath);
-//            System.out.println("User ID " + userId + " has been inserted into the database.");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void saveUser(OtpJwtforUsers otpJwtforUsers) {
+        usersJwtRepository.save(otpJwtforUsers);
 
-    public  String readFromDB(String UserIDToFind) {
-        String fileName = "c:\\temp\\AuthMe.csv";
+    }
 
-        try {
-            File file = new File(fileName);
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] tokens = line.split(",");
-                if (tokens.length > 0 && tokens[0].equals(UserIDToFind)) {
-                    reader.close();
-                    return tokens[1];
-                }
-            }
-
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("UserID not registered");
-        return null;
+    public List<OtpJwtforUsers> getGreenUsersList() {
+        return usersJwtRepository.findAll();
+//        return usersJwtRepository.findByIsGreen(true);
     }
 }
 

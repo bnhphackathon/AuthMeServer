@@ -1,6 +1,5 @@
 package com.poalim.hackathon.authme.repository;
 
-import com.poalim.hackathon.authme.dao.NewJwtEntryRequest;
 import com.poalim.hackathon.authme.dao.UsersWhiteList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

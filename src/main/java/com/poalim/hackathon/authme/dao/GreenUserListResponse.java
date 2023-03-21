@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class GreenUserListResponse {
-    List<GreenUser> greenUserList;
+    List<OtpJwtforUsers> greenUserList;
 }

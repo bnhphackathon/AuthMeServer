@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -33,8 +34,8 @@ public class AuthMeService {
         try {
             newJwt = jwtService.getNewJwt();
             log.info("insertJwt: newJWT={}", newJwt);
-            newJwtEntryRequest.setJwt(newJwt);
-            crudService.insertIntoDB(newJwtEntryRequest);
+//            newJwtEntryRequest.setJwt(newJwt);
+            crudService.insertIntoDB(newJwtEntryRequest, newJwt);
             jwtDec = jwtService.decryptJwt(newJwt);
         } catch (Exception e) {
             log.error("insertJwt: error={}", e.getMessage());
@@ -61,12 +62,14 @@ public class AuthMeService {
 
     public AuthenticateUserResponse otpAuthenticate(AuthenticateUserRequest authenticateUserRequest) {
 
-        NewJwtEntryRequest newJwtEntryRequest = crudService.findByUser(authenticateUserRequest.getUser());
+        OtpJwtforUsers newJwtEntryRequest = crudService.findByUser(authenticateUserRequest.getUser());
         if (Objects.isNull(newJwtEntryRequest)){
             return null;
         }
         String otpDb = jwtService.decryptJwt(newJwtEntryRequest.getJwt());
         if (otpDb.equals(authenticateUserRequest.getOtp().toString())){
+            newJwtEntryRequest.setIsGreen(true);
+            crudService.saveUser(newJwtEntryRequest);
             return AuthenticateUserResponse.builder()
                     .otpAuthenticate(true)
                     .user(authenticateUserRequest.getUser())
@@ -80,6 +83,10 @@ public class AuthMeService {
     }
 
     public GreenUserListResponse getGreenList() {
-        return null;
+        List<OtpJwtforUsers> greenUserList = crudService.getGreenUsersList();
+        return GreenUserListResponse.builder()
+                        .greenUserList(greenUserList)
+                                .build();
+
     }
 }
