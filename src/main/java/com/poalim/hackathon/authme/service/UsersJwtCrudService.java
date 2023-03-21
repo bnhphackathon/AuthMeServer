@@ -56,8 +56,8 @@ public class UsersJwtCrudService {
     }
 
     public List<OtpJwtforUsers> getGreenUsersList() {
-        return usersJwtRepository.findAll();
-//        return usersJwtRepository.findByIsGreen(true);
+//        return usersJwtRepository.findAll();
+        return usersJwtRepository.findByIsGreen(true);
     }
 }
 

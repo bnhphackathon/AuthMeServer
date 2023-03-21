@@ -37,10 +37,10 @@ public class AuthMeAppController {
     }
 
     @GetMapping("/green-list")
-    public ResponseEntity<AuthenticateUserResponse> getGreenList() {
+    public ResponseEntity<GreenUserListResponse> getGreenList() {
 
         GreenUserListResponse greenUserListResponse = authMeService.getGreenList();
-        return null;
+        return new ResponseEntity<>(greenUserListResponse, HttpStatus.OK );
 
     }
 
