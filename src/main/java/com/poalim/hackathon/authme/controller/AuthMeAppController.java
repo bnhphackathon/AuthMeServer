@@ -30,9 +30,12 @@ public class AuthMeAppController {
     }
 
     @GetMapping("/authenticate-user")
-    public ResponseEntity<AuthenticateUserResponse> authenticateUser(@RequestBody AuthenticateUserRequest authenticateUserRequest) {
-
-        return new ResponseEntity<AuthenticateUserResponse>( authMeService.otpAuthenticate(authenticateUserRequest), HttpStatus.OK);
+    public ResponseEntity<AuthenticateUserResponse> authenticateUser(@RequestHeader("userId") String userId,
+                                                                     @RequestHeader("otp") String otp) {
+        return new ResponseEntity<AuthenticateUserResponse>( authMeService.otpAuthenticate(AuthenticateUserRequest.builder()
+                        .user(userId)
+                        .otp(otp)
+                .build()), HttpStatus.OK);
 
     }
 

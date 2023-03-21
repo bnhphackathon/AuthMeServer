@@ -1,12 +1,11 @@
 package com.poalim.hackathon.authme.service;
-import com.poalim.hackathon.authme.dao.GreenUser;
+
 import com.poalim.hackathon.authme.dao.NewJwtEntryRequest;
 import com.poalim.hackathon.authme.dao.OtpJwtforUsers;
 import com.poalim.hackathon.authme.repository.UsersJwtRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,12 +40,8 @@ public class UsersJwtCrudService {
 
     public OtpJwtforUsers findByUser(String user) {
 
-        Optional<OtpJwtforUsers> jwtEntryOpt = usersJwtRepository.findByUser(user);
-        if (!jwtEntryOpt.isPresent()){
-            return null;
-        }
-        return jwtEntryOpt.get();
-
+        Optional<OtpJwtforUsers> jwtEntryOpt = usersJwtRepository.findByUser(user.toUpperCase());
+        return jwtEntryOpt.orElse(null);
     }
 
 

@@ -77,7 +77,7 @@ public class AuthMeService {
         } else {
             return AuthenticateUserResponse.builder()
                     .otpAuthenticate(false)
-                    .user(authenticateUserRequest.getUser())
+                    .user(authenticateUserRequest.getUser().toUpperCase())
                     .build();
         }
     }
